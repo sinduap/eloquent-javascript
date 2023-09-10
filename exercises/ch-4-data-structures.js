@@ -57,34 +57,86 @@ console.log(listToArray(myList));
 //==========================//
 //=== 4.DEEP COMPARISON ====//
 //==========================//
-const isPrimitive = val => !(val instanceof Object);
-const isObject = val => typeof val === 'object' && !Array.isArray(val);
-const isArray = val => Array.isArray(val);
-
-function deepEqual(obj1, obj2) {
-  // Compare primitive
-  if (isPrimitive(obj1) || isPrimitive(obj2)) return obj1 === obj2;
-
-  // Compare object
-  if (isObject(obj1)) {
-    for (const key in obj1) {
-      if (obj2[key] === undefined) return false;
-      if (!isPrimitive(obj1[key])) return deepEqual(obj1[key], obj2[key]);
-      if (obj1[key] !== obj2[key]) return false;
-    }
-    return true;
-  }
-
-  // Compare array
-  if (isArray(obj1)) {
-    if (obj1.length !== obj2.length) return false;
-    for (const [i, val] of obj1.entries()) {
-      if (!isPrimitive(val)) return deepEqual(val, obj2.at(i));
-      if (val !== obj2.at(i)) return false;
-    }
-    return true;
-  }
+function equalPrimitives(prim1, prim2) {
+  return (
+    (Number.isNaN(prim1) && Number.isNaN(prim2)) || Object.is(prim1, prim2)
+  );
 }
 
-console.log(deepEqual([[[]]], [[[]]]));
+function deepEqual(val1, val2) {
+  if (typeof val1 !== typeof val2) return false;
+
+  if (typeof val1 !== 'object' || val1 === null)
+    return equalPrimitives(val1, val2);
+
+  if (Array.isArray(val1)) {
+    if (val1.length !== val2.length) return false;
+
+    for (const [i, el] of val1.entries()) {
+      if (!deepEqual(el, val2.at(i))) return false;
+    }
+  } else {
+    if (Object.entries(val1).length !== Object.entries(val2).length)
+      return false;
+
+    for (const key in val1) {
+      if (!deepEqual(val1[key], val2[key])) return false;
+    }
+  }
+
+  return true;
+}
+
+let mySymbol;
+
+console.log(
+  deepEqual(
+    {
+      primitives: [
+        'string',
+        43e-9,
+        2_000_000_000_000_000n,
+        (mySymbol = Symbol()),
+        null,
+        undefined,
+        NaN,
+        Infinity,
+        -Infinity,
+      ],
+      reverences: {
+        object: {
+          name: 'Sindu Andita Pratama',
+          age: 33,
+          gender: 'male',
+          nationality: 'Indonesian',
+          interests: ['music', 'reading', 'writing'],
+        },
+        array: ['HTML', 'CSS', 'JavaScript', 'React', 'NodeJs', 'MongoDb'],
+      },
+    },
+    {
+      primitives: [
+        'string',
+        43e-9,
+        2_000_000_000_000_000n,
+        mySymbol,
+        null,
+        undefined,
+        NaN,
+        Infinity,
+        -Infinity,
+      ],
+      reverences: {
+        object: {
+          name: 'Sindu Andita Pratama',
+          age: 33,
+          gender: 'male',
+          nationality: 'Indonesian',
+          interests: ['music', 'reading', 'writing'],
+        },
+        array: ['HTML', 'CSS', 'JavaScript', 'React', 'NodeJs', 'MongoDb'],
+      },
+    }
+  )
+);
 // → true
