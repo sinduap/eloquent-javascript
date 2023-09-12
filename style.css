@@ -1,0 +1,15 @@
+.container {
+  width: 1140px;
+  max-width: 95%;
+  margin: 0 auto;
+}
+code span {
+  background-color: lightblue;
+  padding: 5px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+li:not(:last-of-type) {
+  margin-bottom: 10px;
+}
