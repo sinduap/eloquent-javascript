@@ -16,7 +16,14 @@ This repository contains notes, exercises, and projects of [Eloquent JavaScript]
   1. ~
   2. [Chapter 2 Program Structure](exercises/ch-2-program-structure.js)
   3. [Chapter 3 Functions](exercises/ch-3-functions.js)
-  4. [Chapter 4 Functions](exercises/ch-4-data-structures.js)
+  4. [Chapter 4 Data Structure](exercises/ch-4-data-structures.js)
+
+- ### Examples
+
+  1. ~
+  2. [Chapter 2 Program Structure](examples/2-program-structure.html)
+  3. [Chapter 3 Functions](examples/3-functions.html)
+  4. [Chapter 4 Data Structure](examples/4-data-structures.html)
 
 - ### Projects
 
