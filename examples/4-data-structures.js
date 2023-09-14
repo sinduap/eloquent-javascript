@@ -28,18 +28,19 @@ scriptEL.addEventListener('load', function (_e) {
     );
   }
 
-  function journalEvents(journal) {
+  function eventsFrom(journal) {
     return journal.reduce((acc, curr) => {
-      const currEvt = acc;
+      const events = acc;
+
       curr.events.forEach(evt => {
-        if (acc.includes(evt)) return;
-        currEvt.push(evt);
+        !acc.includes(evt) && events.push(evt);
       });
-      return currEvt;
+
+      return events;
     }, []);
   }
 
-  for (const event of journalEvents(JOURNAL)) {
+  for (const event of eventsFrom(JOURNAL)) {
     console.log(`${event}: ${phi(tableFor(event, JOURNAL))}`);
   }
 });

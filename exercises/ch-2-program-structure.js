@@ -3,7 +3,7 @@
 //===========================//
 //== 1.LOOPING A TRIANGLES ==//
 //===========================//
-function printTriangle(n = 7) {
+export function printTriangle(n = 7) {
   for (let i = 0; i <= n; i++) {
     console.log('#'.repeat(i));
   }
@@ -15,7 +15,7 @@ printTriangle();
 //======= 2.FIZZBUZZ ========//
 //===========================//
 
-function fizzBuzz(n = 100) {
+export function fizzBuzz(n = 100) {
   for (let i = 1; i <= n; i++) {
     const isFizz = i % 3 === 0;
     const isBuzz = i % 5 === 0;
@@ -32,7 +32,7 @@ fizzBuzz();
 //===========================//
 //====== 3.CHESSBOARD =======//
 //===========================//
-function printChessboard(size = 8) {
+export function printChessboard(size = 8) {
   // ROWS
   for (let i = 1; i <= size; i++) {
     let displayRow = '';

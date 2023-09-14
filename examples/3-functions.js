@@ -103,14 +103,7 @@ find(1, "1")
 
 // =============================================
 
-function zeroPad(num, width = 3) {
-  let result = String(num);
-  while (result.length < width) {
-    result = '0' + result;
-  }
-  return result;
-}
-
+/*
 function printZeroPaddedWithLabel(num, label) {
   if (num === undefined) return;
   let result = String(num);
@@ -118,6 +111,15 @@ function printZeroPaddedWithLabel(num, label) {
     result = '0' + result;
   }
   console.log(result + ' ' + label);
+}
+*/
+
+function zeroPad(num, width = 3) {
+  let result = String(num);
+  while (result.length < width) {
+    result = `0${result}`;
+  }
+  return result;
 }
 
 function printFarmInventory(cows, chickens, pigs) {
