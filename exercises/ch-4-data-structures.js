@@ -3,14 +3,14 @@
 //==========================//
 //=== 1.THE SUM OF RANGE ===//
 //==========================//
-function range(from, to) {
+export function range(from, to) {
   const iterable = {
     length: to - from + 1,
   };
   return Array.from(iterable, (_n, i) => from + i);
 }
 
-function sum(arr) {
+export function sum(arr) {
   return arr.reduce((acc, curr) => acc + curr, 0);
 }
 
@@ -20,11 +20,11 @@ console.log(sum(range(1, 10)));
 //==========================//
 //== 2.REVERSING AN ARRAY ==//
 //==========================//
-function reverseArray(arr) {
+export function reverseArray(arr) {
   return [...arr].reverse();
 }
 
-function reverseArrayInPLace(arr) {
+export function reverseArrayInPLace(arr) {
   return arr.reverse();
 }
 
@@ -37,7 +37,7 @@ console.log(myNewArray);
 //==========================//
 //======== 3.A LIST ========//
 //==========================//
-function arrayToList(arr) {
+export function arrayToList(arr) {
   if (arr.length === 1) return { value: arr.shift(), rest: null };
   return { value: arr.shift(), rest: arrayToList(arr) };
 }
@@ -47,7 +47,7 @@ const myList = arrayToList(myOtherArray);
 
 console.log(myList);
 
-function listToArray(list) {
+export function listToArray(list) {
   if (list.rest === null) return [list.value];
   else return [list.value, ...listToArray(list.rest)];
 }
@@ -63,7 +63,7 @@ function equalPrimitives(prim1, prim2) {
   );
 }
 
-function deepEqual(val1, val2) {
+export function deepEqual(val1, val2) {
   if (typeof val1 !== typeof val2) return false;
 
   if (typeof val1 !== 'object' || val1 === null)
@@ -75,13 +75,11 @@ function deepEqual(val1, val2) {
     for (const [i, el] of val1.entries()) {
       if (!deepEqual(el, val2.at(i))) return false;
     }
-  } else {
-    if (Object.entries(val1).length !== Object.entries(val2).length)
-      return false;
+  }
+  if (Object.entries(val1).length !== Object.entries(val2).length) return false;
 
-    for (const key in val1) {
-      if (!deepEqual(val1[key], val2[key])) return false;
-    }
+  for (const key in val1) {
+    if (!deepEqual(val1[key], val2[key])) return false;
   }
 
   return true;
