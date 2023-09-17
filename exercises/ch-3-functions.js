@@ -5,7 +5,9 @@
 //======================//
 
 export function min(...args) {
-  return args.reduce((acc, curr) => (curr < acc ? curr : acc), Infinity);
+  return args.reduce((acc, curr) => {
+    return curr < acc ? curr : acc;
+  }, Infinity);
 }
 
 console.log(min(0, 10));
@@ -39,11 +41,15 @@ try {
 //=== 3.BEAN COUNTING ===//
 //=======================//
 export function countBs(str) {
-  return [...str].reduce((acc, curr) => (curr === 'B' ? acc + 1 : acc), 0);
+  return Array.from(str).reduce((acc, curr) => {
+    return curr === 'B' ? acc + 1 : acc;
+  }, 0);
 }
 
 export function countChar(str, char) {
-  return [...str].reduce((acc, curr) => (curr === char ? acc + 1 : acc), 0);
+  return Array.from(str).reduce((acc, curr) => {
+    return curr === char ? acc + 1 : acc;
+  }, 0);
 }
 
 console.log(countBs('BBC'));

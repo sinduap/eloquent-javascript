@@ -57,11 +57,8 @@ console.log(listToArray(myList));
 //==========================//
 //=== 4.DEEP COMPARISON ====//
 //==========================//
-function equalPrimitives(prim1, prim2) {
-  return (
-    (Number.isNaN(prim1) && Number.isNaN(prim2)) || Object.is(prim1, prim2)
-  );
-}
+const equalPrimitives = (val1, val2) =>
+  (Number.isNaN(val1) && Number.isNaN(val2)) || Object.is(val1, val2);
 
 export function deepEqual(val1, val2) {
   if (typeof val1 !== typeof val2) return false;
@@ -69,17 +66,10 @@ export function deepEqual(val1, val2) {
   if (typeof val1 !== 'object' || val1 === null)
     return equalPrimitives(val1, val2);
 
-  if (Array.isArray(val1)) {
-    if (val1.length !== val2.length) return false;
-
-    for (const [i, el] of val1.entries()) {
-      if (!deepEqual(el, val2.at(i))) return false;
-    }
-  }
   if (Object.entries(val1).length !== Object.entries(val2).length) return false;
 
-  for (const key in val1) {
-    if (!deepEqual(val1[key], val2[key])) return false;
+  for (const [key, val] of Object.entries(val1)) {
+    if (!deepEqual(val, val2[key])) return false;
   }
 
   return true;

@@ -12,7 +12,7 @@ import {
 } from './ch-4-data-structures.js';
 
 describe('The sum of range', function () {
-  it('Returns 55, the sum of range 1 - 10', function () {
+  it('Returns 55, the sum of numbers ranged from 1 to 10', function () {
     assert.equal(sum(range(1, 10)), 55);
   });
 });
@@ -38,7 +38,7 @@ describe('Reversing an array', function () {
   });
 });
 
-describe('List', function () {
+describe('A list', function () {
   const array = range(1, 5);
   const list = arrayToList(array);
 
@@ -81,7 +81,7 @@ describe('Deep comparison', function () {
         Infinity,
         -Infinity,
       ],
-      reverences: {
+      objects: {
         object: {
           name: 'Sindu Andita Pratama',
           age: 33,
@@ -90,6 +90,10 @@ describe('Deep comparison', function () {
           interests: ['music', 'reading', 'writing'],
         },
         array: ['HTML', 'CSS', 'JavaScript', 'React', 'NodeJs', 'MongoDb'],
+        date: new Date(),
+        function: function (x, y) {
+          return x + y;
+        },
       },
     };
 

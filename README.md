@@ -10,6 +10,8 @@ This repository contains notes, exercises, and projects of [Eloquent JavaScript]
 
   0. [Chapter 0 Introduction](notes/ch-0-introduction.md)
   1. [Chapter 1 Values Types and Operators](notes/ch-1-values-types-and-operator.md)
+  2. [Chapter 2 Program Structure](notes/ch-2-program-structure.md)
+  3. [Chapter 3 Functions](notes/ch-3-funtions.md)
 
 - ### Exercise
 
