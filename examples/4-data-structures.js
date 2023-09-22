@@ -16,15 +16,10 @@ scriptEL.addEventListener('load', function (_e) {
     return table;
   }
 
-  function phi(table) {
+  function phi([n00, n01, n10, n11]) {
     return (
-      (table[3] * table[0] - table[2] * table[1]) /
-      Math.sqrt(
-        (table[3] + table[2]) *
-          (table[1] + table[0]) *
-          (table[3] + table[1]) *
-          (table[2] + table[0])
-      )
+      (n11 * n00 - n10 * n01) /
+      Math.sqrt((n11 + n10) * (n01 + n00) * (n11 + n01) * (n10 + n00))
     );
   }
 
@@ -39,6 +34,21 @@ scriptEL.addEventListener('load', function (_e) {
   }
 
   for (const event of eventsFrom(JOURNAL)) {
-    console.log(`${event}: ${phi(tableFor(event, JOURNAL))}`);
+    const corr = phi(tableFor(event, JOURNAL));
+    if (corr > 0.1 || corr < -0.1) console.log(`${event}: ${corr}`);
   }
+
+  for (const entry of JOURNAL) {
+    if (
+      entry.events.includes('peanuts') &&
+      !entry.events.includes('brushed teeth')
+    )
+      entry.events.push('peanuts brushed');
+  }
+
+  console.log(
+    `Eating peanuts and forgeting to brush teeth correlation: ${phi(
+      tableFor('peanuts brushed', JOURNAL)
+    )}`
+  );
 });
