@@ -218,7 +218,7 @@
   function reduce(array, combine, start) {
       let current = start;
       for (let element of array) {
-          urrent = combine(current, element);
+          current = combine(current, element);
       }
       return current;
   }

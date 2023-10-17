@@ -6,29 +6,29 @@ This repository contains notes, exercises, and projects of [Eloquent JavaScript]
 
 ## Table of Contents
 
-- ### Notes
+### Notes
 
-  0. [Chapter 0 Introduction](notes/ch-0-introduction.md)
-  1. [Chapter 1 Values Types and Operators](notes/ch-1-values-types-and-operator.md)
-  2. [Chapter 2 Program Structure](notes/ch-2-program-structure.md)
-  3. [Chapter 3 Functions](notes/ch-3-functions.md)
-  4. [Chapter 4 Data Structure](notes/ch-4-data-structures.md)
+0. [Chapter 0 Introduction](notes/ch-0-introduction.md)
+1. [Chapter 1 Values Types and Operators](notes/ch-1-values-types-and-operator.md)
+2. [Chapter 2 Program Structure](notes/ch-2-program-structure.md)
+3. [Chapter 3 Functions](notes/ch-3-functions.md)
+4. [Chapter 4 Data Structure](notes/ch-4-data-structures.md)
 
-- ### Exercise
+### Exercise
 
-  1. ~
-  2. [Chapter 2 Program Structure](exercises/ch-2-program-structure.js)
-  3. [Chapter 3 Functions](exercises/ch-3-functions.js)
-  4. [Chapter 4 Data Structure](exercises/ch-4-data-structures.js)
+1. ~
+2. [Chapter 2 Program Structure](exercises/ch-2-program-structure.js)
+3. [Chapter 3 Functions](exercises/ch-3-functions.js)
+4. [Chapter 4 Data Structure](exercises/ch-4-data-structures.js)
 
-- ### Examples
+### Examples
 
-  1. ~
-  2. [Chapter 2 Program Structure](examples/2-program-structure.html)
-  3. [Chapter 3 Functions](examples/3-functions.html)
-  4. [Chapter 4 Data Structure](examples/4-data-structures.html)
+1. ~
+2. [Chapter 2 Program Structure](examples/2-program-structure.html)
+3. [Chapter 3 Functions](examples/3-functions.html)
+4. [Chapter 4 Data Structure](examples/4-data-structures.html)
 
-- ### Projects
+### Projects
 
 ## Acknowledgments
 
