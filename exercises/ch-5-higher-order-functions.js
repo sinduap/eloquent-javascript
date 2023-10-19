@@ -1,3 +1,4 @@
+import SCRIPTS from './scripts.js';
 //======= EXERCISES ========//
 
 //==========================//
@@ -39,3 +40,57 @@ function everyV2(array, predicate) {
 //====================================//
 //=== 3.DOMINANT WRITING DIRECTION ===//
 //====================================//
+
+function characterScript(code) {
+  for (let script of SCRIPTS) {
+    if (
+      script.ranges.some(([from, to]) => {
+        return code >= from && code < to;
+      })
+    ) {
+      return script;
+    }
+  }
+
+  return null;
+}
+
+function groupBy(array, prop) {
+  return array
+    .map(s => s[prop])
+    .reduce(
+      (acc, curr) =>
+        acc[curr] ? { ...acc, [curr]: acc[curr] + 1 } : { ...acc, [curr]: 1 },
+      {}
+    );
+}
+
+function getDominantWriting(text) {
+  let scriptsOfText = [];
+
+  for (const char of text) {
+    const script = characterScript(char.codePointAt(0));
+    script && scriptsOfText.push(script);
+  }
+
+  const directionCount = groupBy(scriptsOfText, 'direction');
+
+  let currDominant;
+
+  for (const key in directionCount) {
+    if (!currDominant) {
+      currDominant = key;
+    } else {
+      currDominant =
+        directionCount[currDominant] < directionCount[key] ? key : currDominant;
+    }
+  }
+
+  return `The dominant direction is ${currDominant}`;
+}
+
+console.log(
+  getDominantWriting(
+    '英国的狗说"woof",مرحبا كيف حالي من اندونيسيا俄罗斯的狗说"тяв"'
+  )
+);
