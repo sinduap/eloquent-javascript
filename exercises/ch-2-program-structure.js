@@ -3,52 +3,53 @@
 //===========================//
 //== 1.LOOPING A TRIANGLES ==//
 //===========================//
-export function printTriangle(n = 7) {
+export function printTriangle(n) {
   for (let i = 0; i <= n; i++) {
     console.log('#'.repeat(i));
   }
 }
 
-printTriangle();
+printTriangle(7);
 
 //===========================//
 //======= 2.FIZZBUZZ ========//
 //===========================//
 
-export function fizzBuzz(n = 100) {
+export function fizzBuzz(n) {
   for (let i = 1; i <= n; i++) {
-    const isFizz = i % 3 === 0;
-    const isBuzz = i % 5 === 0;
+    let word = i;
 
-    if (isFizz && isBuzz) console.log('Fizzbuzz');
-    else if (isFizz) console.log('Fizz');
-    else if (isBuzz) console.log('Buzz');
-    else console.log(i);
+    if (i % 3 === 0 && i % 5 === 0) {
+      word = 'FizzBuzz';
+    } else if (i % 3 === 0 && i % 5 !== 0) {
+      word = 'Fizz';
+    } else if (i % 5 === 0 && i % 3 !== 0) {
+      word = 'Buzz';
+    }
+
+    console.log(word);
   }
 }
 
-fizzBuzz();
+fizzBuzz(100);
 
 //===========================//
 //====== 3.CHESSBOARD =======//
 //===========================//
-export function printChessboard(size = 8) {
-  // ROWS
-  for (let i = 1; i <= size; i++) {
-    let displayRow = '';
-    // COLS
-    for (let j = 1; j <= size; j++) {
-      const isOddRow = i % 2 === 0;
-      const isOddCol = j % 2 === 0;
+export function printChessboard(size) {
+  for (let i = 0; i < size; i++) {
+    let row = '';
 
-      if (isOddRow) {
-        displayRow += isOddCol ? '#' : ' ';
+    for (let j = 0; j < size; j++) {
+      if (i % 2 === 0) {
+        row += j % 2 === 0 ? '#' : ' ';
       } else {
-        displayRow += isOddCol ? ' ' : '#';
+        row += j % 2 === 0 ? ' ' : '#';
       }
     }
-    console.log(displayRow);
+
+    console.log(row);
   }
 }
 
-printChessboard();
+printChessboard(8);

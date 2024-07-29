@@ -1,6 +1,4 @@
-const script = document.createElement('script');
-script.src = 'https://eloquentjavascript.net/code/scripts.js';
-document.head.append(script);
+import SCRIPTS from './scripts.js';
 
 let total = 0,
   count = 1;
@@ -74,91 +72,97 @@ repeat(3, n => {
 
 ['A', 'B'].forEach(l => console.log(l));
 
-script.addEventListener('load', () => {
-  function filter(array, test) {
-    let passed = [];
-    for (let element of array) {
-      if (test(element)) {
-        passed.push(element);
-      }
+function filter(array, test) {
+  let passed = [];
+  for (let element of array) {
+    if (test(element)) {
+      passed.push(element);
     }
-    return passed;
   }
+  return passed;
+}
 
-  console.log(filter(SCRIPTS, script => script.living));
+console.log(filter(SCRIPTS, script => script.living));
 
-  function map(array, transform) {
-    let mapped = [];
-    for (let element of array) {
-      mapped.push(transform(element));
+function map(array, transform) {
+  let mapped = [];
+  for (let element of array) {
+    mapped.push(transform(element));
+  }
+  return mapped;
+}
+
+let rtlScripts = SCRIPTS.filter(s => s.direction == 'rtl');
+console.log(map(rtlScripts, s => s.name));
+
+function reduce(array, combine, start) {
+  let current = start;
+  for (let element of array) {
+    current = combine(current, element);
+  }
+  return current;
+}
+
+console.log(reduce([1, 2, 3, 4], (a, b) => a + b, 0));
+
+function characterCount(script) {
+  return script.ranges.reduce((count, [from, to]) => {
+    return count + (to - from);
+  }, 0);
+}
+
+console.log(
+  SCRIPTS.reduce((a, b) => {
+    return characterCount(a) < characterCount(b) ? b : a;
+  })
+);
+
+function getScriptFromCode(code, data) {
+  for (let script of data) {
+    if (script.ranges.some(([from, to]) => code >= from && code < to)) {
+      return script;
     }
-    return mapped;
   }
-  let rtlScripts = SCRIPTS.filter(s => s.direction == 'rtl');
-  console.log(map(rtlScripts, s => s.name));
 
-  function reduce(array, combine, start) {
-    let current = start;
-    for (let element of array) {
-      current = combine(current, element);
+  return null;
+}
+
+function getScriptFromChar(char, data) {
+  return getScriptFromCode(char.codePointAt(0), data);
+}
+
+function getScriptPercentage(text, data) {
+  const scripts = [];
+
+  for (const char of text) {
+    const script = getScriptFromChar(char, data);
+
+    if (!script) continue;
+
+    const { name } = script;
+    const scriptIndex = scripts.findIndex(script => script.name === name);
+
+    if (scriptIndex >= 0) {
+      scripts[scriptIndex].count++;
+    } else {
+      scripts.push({ name, count: 1 });
     }
-    return current;
   }
 
-  console.log(reduce([1, 2, 3, 4], (a, b) => a + b, 0));
-
-  function characterCount(script) {
-    return script.ranges.reduce((count, [from, to]) => {
-      return count + (to - from);
-    }, 0);
-  }
-
-  console.log(
-    SCRIPTS.reduce((a, b) => {
-      return characterCount(a) < characterCount(b) ? b : a;
-    })
+  const totalCount = scripts.reduce(
+    (total, scripts) => total + scripts.count,
+    0
   );
 
-  function characterScript(code) {
-    for (let script of SCRIPTS) {
-      if (
-        script.ranges.some(([from, to]) => {
-          return code >= from && code < to;
-        })
-      ) {
-        return script;
-      }
-    }
+  return scripts
+    .sort((a, b) => b.count - a.count)
+    .map(
+      script =>
+        `${Math.round((script.count / totalCount) * 100)}% ${script.name}`
+    )
+    .join(', ');
+}
 
-    return null;
-  }
-
-  function countBy(items, groupName) {
-    let counts = [];
-    for (let item of items) {
-      let name = groupName(item);
-      let known = counts.findIndex(c => c.name == name);
-      if (known == -1) {
-        counts.push({ name, count: 1 });
-      } else {
-        counts[known].count++;
-      }
-    }
-    return counts;
-  }
-
-  function textScripts(text) {
-    let scripts = countBy(text, char => {
-      let script = characterScript(char.codePointAt(0));
-      return script ? script.name : 'none';
-    }).filter(({ name }) => name != 'none');
-    let total = scripts.reduce((n, { count }) => n + count, 0);
-    if (total == 0) return 'No scripts found';
-    return scripts
-      .map(({ name, count }) => {
-        return `${Math.round((count * 100) / total)}% ${name}`;
-      })
-      .join(', ');
-  }
-  console.log(textScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'));
-});
+console.log(
+  getScriptPercentage('ꦄꦏ꧀ꦰꦫꦩꦸꦑ英国的狗说"woof", 俄罗斯的狗说"тяв"', SCRIPTS)
+);

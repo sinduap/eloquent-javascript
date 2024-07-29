@@ -4,10 +4,8 @@
 //===== 1.MINIMUM ======//
 //======================//
 
-export function min(...args) {
-  return args.reduce((acc, curr) => {
-    return curr < acc ? curr : acc;
-  }, Infinity);
+export function min(a, b) {
+  return a - b > a + b ? b : a;
 }
 
 console.log(min(0, 10));
@@ -21,9 +19,7 @@ console.log(min(0, -10));
 
 export function isEven(num) {
   if (num < 0) throw new Error("Num can't be negative");
-  if (num === 0) return true;
-  if (num === 1) return false;
-  if (num > 1) return isEven(num - 2);
+  return num > 2 ? isEven(num - 2) : num % 2 === 0;
 }
 
 console.log(isEven(50));
@@ -41,15 +37,19 @@ try {
 //=== 3.BEAN COUNTING ===//
 //=======================//
 export function countBs(str) {
-  return Array.from(str).reduce((acc, curr) => {
-    return curr === 'B' ? acc + 1 : acc;
-  }, 0);
+  let count = 0;
+  for (const el of str) {
+    if (el === 'B') count++;
+  }
+  return count;
 }
 
 export function countChar(str, char) {
-  return Array.from(str).reduce((acc, curr) => {
-    return curr === char ? acc + 1 : acc;
-  }, 0);
+  let count = 0;
+  for (const el of str) {
+    if (el === char) count++;
+  }
+  return count;
 }
 
 console.log(countBs('BBC'));
