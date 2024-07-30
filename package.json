@@ -8,7 +8,7 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha exercises"
   },
   "keywords": [],
   "author": "Sindu Andita Pratama",

@@ -42,10 +42,12 @@ export function reverseArrayInPLace(array) {
     array[i] = array[array.length - i - 1];
     array[array.length - i - 1] = el;
   }
+
+  return array;
 }
 
-reverseArrayInPLace(myArray);
-console.log(myArray);
+const myNewArray = reverseArrayInPLace(myArray);
+console.log(myArray === myNewArray);
 
 //==========================//
 //======== 3.A LIST ========//

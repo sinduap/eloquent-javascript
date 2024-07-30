@@ -13,7 +13,7 @@ describe('Chapter 2 Program Structure', function () {
   });
 
   it('Should print triangle', function () {
-    printTriangle();
+    printTriangle(7);
 
     expect(console.log.calledWith('#')).to.be.true;
     expect(console.log.calledWith('##')).to.be.true;
@@ -24,12 +24,13 @@ describe('Chapter 2 Program Structure', function () {
     expect(console.log.calledWith('#######')).to.be.true;
   });
 
-  it('should log "Number, Fizz, Buzz, Fizzbuzz', function () {
+  it('should log Number, Fizz, Buzz, Fizzbuzz', function () {
     fizzBuzz(100);
 
+    expect(console.log.calledWith(7)).to.be.true;
     expect(console.log.calledWith('Fizz')).to.be.true;
     expect(console.log.calledWith('Buzz')).to.be.true;
-    expect(console.log.calledWith('Fizzbuzz')).to.be.true;
+    expect(console.log.calledWith('FizzBuzz')).to.be.true;
   });
 
   it('should print chessboard with 8 rows and columns', function () {
