@@ -16,15 +16,15 @@ const roads = [
 ];
 
 function buildGraph(edges) {
+  const graph = new Map();
+
   function addEdges(from, to) {
     if (!graph.has(from)) {
       graph.set(from, new Set([to]));
-    } else {
-      graph.get(from).add(to);
+      return;
     }
+    graph.get(from).add(to);
   }
-
-  const graph = new Map();
 
   for (const [from, to] of edges.map(road => road.split('-'))) {
     addEdges(from, to);
@@ -74,70 +74,66 @@ class Robot {
   }
 
   act(memory) {
+    let route = memory;
     let destination;
 
     switch (this.type) {
       case 'random': {
         const locations = Array.from(roadGraph.get(this.location));
         destination = randomPick(locations);
-        break;
+        return { destination, memory };
       }
 
       case 'route-oriented': {
-        memory = memory.length ? memory : mailRoute;
-        destination = memory.at(0);
-        memory = memory.slice(1);
-        break;
+        route = route.length ? route : mailRoute;
+        [destination, ...route] = route;
+        return { destination, memory: route };
       }
 
       case 'goal-oriented': {
-        if (!memory.length) {
+        if (!route.length) {
           const parcel = this.parcels.at(0);
-
           const from = this.location;
           const to =
             parcel.location === this.location
               ? parcel.address
               : parcel.location;
-          memory = findShortestRoute(roadGraph, from, to);
+          route = findShortestRoute(roadGraph, from, to);
         }
-
-        destination = memory.at(0);
-        memory = memory.slice(1);
-        break;
+        [destination, ...route] = route;
+        return { destination, memory: route };
       }
 
       case 'efficient': {
-        if (!memory.length) {
-          const parcel = findNearestParcel(this.parcels, this.location);
-
+        if (!route.length) {
+          const parcel = findNearestParcel(
+            roadGraph,
+            this.parcels,
+            this.location
+          );
           const from = this.location;
           const to =
             parcel.location === this.location
               ? parcel.address
               : parcel.location;
-          memory = findShortestRoute(roadGraph, from, to);
+          route = findShortestRoute(roadGraph, from, to);
         }
-
-        destination = memory.at(0);
-        memory = memory.slice(1);
-        break;
+        [destination, ...route] = route;
+        return { destination, memory: route };
       }
 
       default:
         throw new Error(`Type: ${this.type} is invalid robot type!`);
     }
-
-    return { destination, memory };
   }
 
   static run(robot, memory = []) {
     let turns = 0;
-
-    // console.log(
-    //   `Robot ${robot.type} start delivering ${robot.parcels.length} parcel`
-    // );
-
+    /*
+    console.log(
+      `Robot ${robot.type} start delivering ${robot.parcels.length} parcel`
+    );
+    */
     while (robot.parcels.length) {
       const action = robot.act(memory);
       memory = action.memory;
@@ -145,11 +141,11 @@ class Robot {
       // console.log(`Moved to ${action.destination}`);
       turns++;
     }
-
-    // console.log(
-    //   `Robot ${robot.type} done delivering all parcels in ${turns} turns`
-    // );
-
+    /*
+    console.log(
+      `Robot ${robot.type} done delivering all parcels in ${turns} turns`
+    );
+    */
     return turns;
   }
 
@@ -201,11 +197,11 @@ function findShortestRoute(graph, from, to) {
   }
 }
 
-function findNearestParcel(parcels, currLocation) {
+function findNearestParcel(graph, parcels, currLocation) {
   const parcelsRoutes = [];
 
   for (const parcel of parcels) {
-    const route = findShortestRoute(roadGraph, currLocation, parcel.location);
+    const route = findShortestRoute(graph, currLocation, parcel.location);
     parcelsRoutes.push({ parcel, route });
   }
 
@@ -222,9 +218,20 @@ const routeRobot = new Robot('route-oriented', startingLocation, parcels);
 const goalRobot = new Robot('goal-oriented', startingLocation, parcels);
 const effientRobot = new Robot('efficient', startingLocation, parcels);
 
-Robot.run(randomRobot);
-Robot.run(routeRobot);
-Robot.run(goalRobot);
-Robot.run(effientRobot);
+//prettier-ignore
+const randomRobotResult = `Takes ${Robot.run(randomRobot)} turns to deliver ${parcels.length} parcels.`
+//prettier-ignore
+const routeRobotResult = `Takes ${Robot.run(routeRobot)} turns to deliver ${parcels.length} parcels.`;
+//prettier-ignore
+const goalRobotResult = `Takes ${Robot.run(goalRobot)} turns to deliver ${parcels.length} parcels.`;
+//prettier-ignore
+const effientRobotResult = `Takes ${Robot.run(effientRobot)} turns to deliver ${parcels.length} parcels.`;
+
+console.log({
+  randomRobotResult,
+  routeRobotResult,
+  goalRobotResult,
+  effientRobotResult,
+});
 
 export { Robot, createParcels };

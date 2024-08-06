@@ -22,11 +22,8 @@ function compare(robot1, memory1, robot2, memory2) {
     return [total1 + steps1, total2 + steps2];
   });
 
-  const result = `Of total ${task} task. ${robot1.name} takes ${
-    totalSteps1 / task
-  } steps per task on average, meanwhile ${robot2.name} takes ${
-    totalSteps2 / task
-  } steps per task on average.`;
+  //prettier-ignore
+  const result = `Of total ${task} task. ${robot1.name} takes ${totalSteps1 / task} steps per task on average, meanwhile ${robot2.name} takes ${totalSteps2 / task} steps per task on average.`;
 
   console.log(result);
 }
@@ -58,20 +55,20 @@ class PersistentGroup {
     this.group = new Set();
   }
 
-  add(item) {
-    const g = PersistentGroup.from(this.group);
-    g.group.add(item);
-    return g;
+  add(value) {
+    const group = PersistentGroup.from(this.group);
+    group.group.add(value);
+    return group;
   }
 
-  delete(item) {
-    const g = PersistentGroup.from(this.group);
-    g.group.delete(item);
-    return g;
+  delete(value) {
+    const group = PersistentGroup.from(this.group);
+    group.group.delete(value);
+    return group;
   }
 
-  has(item) {
-    return this.group.has(item);
+  has(value) {
+    return this.group.has(value);
   }
 
   static get empty() {
@@ -80,8 +77,8 @@ class PersistentGroup {
 
   static from(group) {
     const persistentGroup = new PersistentGroup();
-    for (const item of group) {
-      persistentGroup.group.add(item);
+    for (const value of group) {
+      persistentGroup.group.add(value);
     }
     return persistentGroup;
   }

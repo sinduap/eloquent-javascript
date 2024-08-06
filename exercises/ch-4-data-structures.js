@@ -80,8 +80,8 @@ export function deepEqual(a, b) {
 
   if (entriesA.length !== entriesB.length) return false;
 
-  for (const [key, val] of entriesA) {
-    if (!deepEqual(val, b[key])) return false;
+  for (const [key] of entriesA) {
+    if (!deepEqual(a[key], b[key])) return false;
   }
 
   return true;
